@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import rankedFlowers from '../../data/ranked-flower-images.json';
 
 export type FlowerResponse = Array<{
-  tokenId: string;
+  tokenId: number;
   image: string;
   rank: number;
 }>

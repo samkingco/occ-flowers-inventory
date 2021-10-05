@@ -35,7 +35,7 @@ function ResultsPage({ index, pageSize }: ResultsPageProps) {
         return (
           <div className="flower" key={result.tokenId}>
             <a href={openSeaLink}>
-              <img src={result.image} />
+              <img src={result.image} alt={`Flower #${result.tokenId}`} />
             </a>
             <p className="flower-meta">
               <a href={openSeaLink}>#{result.tokenId}</a>{" "}
@@ -76,7 +76,7 @@ const Home: NextPage = () => {
             The garden is a WIP ranking tool for{" "}
             <a href="https://www.occ.xyz/flowers">OCC#1 🌺 Flowers</a>. Filters
             and search coming soon. Ranks are based on the probability of each
-            flower's traits. Contribute on{" "}
+            flower&apos;s traits. Contribute on{" "}
             <a href="https://https://github.com/samkingco/occ-flowers-rarity">
               GitHub
             </a>
