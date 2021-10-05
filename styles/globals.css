@@ -45,6 +45,10 @@ h1 {
   margin: 0 0 1rem 0;
 }
 
+p + p {
+  margin-top: 0.5rem;
+}
+
 img {
   max-width: 100%;
 }
@@ -77,6 +81,7 @@ button,
   transition: all 0.2s ease-in-out;
   padding: 0.75rem 2rem;
   background-color: #ffffff;
+  color: #000000;
   cursor: pointer;
 }
 

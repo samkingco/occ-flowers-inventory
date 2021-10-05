@@ -88,10 +88,14 @@ const Home: NextPage = () => {
         <article className="intro">
           <h1 className="font-snell">the garden</h1>
           <p>
-            The garden is a WIP ranking tool for{" "}
-            <a href="https://www.occ.xyz/flowers">OCC#1 🌺 Flowers</a>. Filters
-            and search coming soon. Ranks are based on the probability of each
-            flower&apos;s traits. Contribute on{" "}
+            The garden is a WIP rarity tool for{" "}
+            <a href="https://www.occ.xyz/flowers">OCC#1 🌺 Flowers</a>.<br />
+            Ranking is purely mathematical based on traits, not vibes. We think
+            you should enjoy the flowers you love regardless of their rarity.
+          </p>
+          <p>💮👄💮</p>
+          <p>
+            Contribute on{" "}
             <a href="https://https://github.com/samkingco/occ-flowers-rarity">
               GitHub
             </a>
@@ -142,7 +146,7 @@ const Home: NextPage = () => {
         {!hasReachedEnd && (
           <div className="center-content">
             <button onClick={() => setSize(size + 1)} disabled={isLoadingMore}>
-              Load More
+              Explore more flowers
             </button>
           </div>
         )}
