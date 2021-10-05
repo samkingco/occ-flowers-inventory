@@ -3,30 +3,14 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import useSWRInfinite from "swr/infinite";
 import { KeyLoader } from "swr";
-import { Flower, FlowerResponse, isValidAddress } from "../utils";
-
-interface FetchError extends Error {
-  status: number;
-}
-
-async function fetcher(url: string) {
-  const res = await fetch(url);
-  if (!res.ok) {
-    const error = new Error(
-      "An error occurred while fetching the data."
-    ) as FetchError;
-    error.message = await res.json();
-    error.status = res.status;
-    throw error;
-  }
-  return res.json();
-}
+import { fetcher, FetchError, Flower, isValidAddress } from "../utils";
+import { FlowersResponse } from "./api/flowers";
 
 const getKey: (
   limit: number,
   tokenIds: string[],
   walletAddress: string
-) => KeyLoader<FlowerResponse> =
+) => KeyLoader<FlowersResponse> =
   (limit, tokenIds, walletAddress) => (_, previousPageData) => {
     if (previousPageData && !previousPageData.hasNextPage) return null;
 
@@ -55,7 +39,7 @@ const Home: NextPage = () => {
 
   const PAGE_SIZE = 60;
   const { data, error, size, setSize } = useSWRInfinite<
-    FlowerResponse,
+    FlowersResponse,
     FetchError
   >(getKey(PAGE_SIZE, tokenIds, walletAddress), fetcher);
 
@@ -131,7 +115,10 @@ const Home: NextPage = () => {
               return (
                 <div className="flower" key={flower.tokenId}>
                   <a href={openSeaLink}>
-                    <img src={flower.image} alt={`Flower #${flower.tokenId}`} />
+                    <img
+                      src={flower.image.base64}
+                      alt={`Flower #${flower.tokenId}`}
+                    />
                   </a>
                   <p className="flower-meta">
                     <a href={openSeaLink}>#{flower.tokenId}</a>{" "}

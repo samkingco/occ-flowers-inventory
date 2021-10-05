@@ -65,6 +65,7 @@ button {
 }
 
 button,
+.button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
@@ -75,6 +76,7 @@ button,
   margin: 0;
   overflow: visible;
   text-transform: none;
+  text-decoration: none;
   border: none;
 
   border-radius: 100px;
@@ -85,7 +87,8 @@ button,
   cursor: pointer;
 }
 
-button:hover {
+button:hover,
+.button:hover {
   background-color: #e4e4e4;
 }
 
@@ -96,6 +99,28 @@ button:hover {
 
 .subdued {
   color: rgba(255, 255, 255, 0.5);
+}
+
+.hidden {
+  display: none;
+}
+
+dl,
+dt,
+dd {
+  margin: 0;
+}
+
+dt {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+dd {
+  font-size: 1.25rem;
+}
+
+dd + dt {
+  margin-top: 1rem;
 }
 
 .intro {
@@ -167,6 +192,24 @@ input:focus-visible {
   text-align: center;
 }
 
+.flower-page-title {
+  margin-bottom: 0;
+}
+
+.flower-detail {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 2rem;
+}
+
+.flower-attributes dl {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
 @media (min-width: 32rem) {
   .flower-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -174,6 +217,13 @@ input:focus-visible {
 
   .input-containers {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 48rem) {
+  .flower-detail {
+    grid-template-columns: 1fr 16rem;
+    grid-gap: 4rem;
   }
 }
 
