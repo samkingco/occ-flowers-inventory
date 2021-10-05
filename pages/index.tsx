@@ -59,12 +59,14 @@ const Home: NextPage = () => {
   return (
     <div className="page">
       <Head>
-        <title>Flower garden</title>
+        <title>The Garden • OCC #1 Flowers</title>
         <meta
           name="description"
-          content="All the on chain flowers with their ranks"
+          content="The garden is a WIP ranking tool for OCC#1 🌺 Flowers. On-chain flower NFTs for you to own or to share."
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </Head>
 
       <main className="main">
