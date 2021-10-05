@@ -80,9 +80,7 @@ const Home: NextPage = () => {
           <p>💮👄💮</p>
           <p>
             Contribute on{" "}
-            <a href="https://https://github.com/samkingco/occ-flowers-rarity">
-              GitHub
-            </a>
+            <a href="https://github.com/samkingco/occ-flowers-rarity">GitHub</a>
             .
           </p>
         </article>
