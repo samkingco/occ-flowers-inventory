@@ -53,7 +53,7 @@ const Home: NextPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const tokenIds = searchTerm ? searchTerm.split(",").map((i) => i.trim()) : [];
 
-  const PAGE_SIZE = 12;
+  const PAGE_SIZE = 60;
   const { data, error, size, setSize } = useSWRInfinite<
     FlowerResponse,
     FetchError
