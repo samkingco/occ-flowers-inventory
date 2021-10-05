@@ -1,0 +1,139 @@
+@import url(https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Roboto&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200;0,300;0,400;1,300;1,400&display=swap);
+
+@font-face {
+  font-family: snell;
+  src: url(./SnellBTRegular.otf);
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Crimson Pro, serif;
+  line-height: 1.5;
+  background: #000000;
+  color: #ffffff;
+}
+
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Crimson Pro, serif;
+}
+
+h1 {
+  font-size: 3rem;
+  line-height: 1;
+  margin: 0 0 1rem 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  overflow: visible;
+  text-transform: none;
+  border: none;
+
+  border-radius: 100px;
+  transition: all 0.2s ease-in-out;
+  padding: 0.75rem 2rem;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #e4e4e4;
+}
+
+.font-snell {
+  font-family: snell, serif;
+  font-weight: normal;
+}
+
+.subdued {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.intro {
+  max-width: 36rem;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 1.25rem;
+  margin-bottom: 4rem;
+}
+
+.page {
+  padding: 6rem 2rem;
+}
+
+.flower-grid {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 2rem;
+}
+
+.flower img {
+  border-radius: 1rem;
+}
+
+.flower-meta {
+  display: flex;
+}
+
+.flower-meta *:nth-child(2) {
+  margin-left: 0.5rem;
+}
+
+.center-content {
+  margin: 0 auto;
+  padding: 2rem 0;
+  max-width: 42rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+@media (min-width: 32rem) {
+  .flower-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 56rem) {
+  .flower-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
