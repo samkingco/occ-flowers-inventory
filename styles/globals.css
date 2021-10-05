@@ -49,6 +49,17 @@ img {
   max-width: 100%;
 }
 
+input,
+textarea,
+select,
+button {
+  display: block;
+  max-width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
 button,
 [type="button"],
 [type="reset"],
@@ -115,6 +126,31 @@ button:hover {
   margin-left: 0.5rem;
 }
 
+.input-containers {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1rem;
+}
+
+input {
+  border-radius: 4rem;
+  border: 2px solid #5e5e5e;
+  background-color: transparent;
+  padding: 1rem;
+  font-size: 20px;
+  font-family: Crimson Pro, serif;
+}
+
+input:disabled {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+input:focus-visible {
+  border: 2px solid #ffffff;
+  outline: none;
+}
+
 .center-content {
   margin: 0 auto;
   padding: 2rem 0;
@@ -128,6 +164,10 @@ button:hover {
 
 @media (min-width: 32rem) {
   .flower-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .input-containers {
     grid-template-columns: repeat(2, 1fr);
   }
 }

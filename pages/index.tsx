@@ -1,60 +1,75 @@
 import { useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import useSWR from "swr";
-import { FlowerResponse } from "./api/flowers";
+import useSWRInfinite from "swr/infinite";
+import { KeyLoader } from "swr";
+import { Flower, FlowerResponse, isValidAddress } from "../utils";
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
-
-// const getKey = (pageIndex: number, previousPageData) => {
-//   if (previousPageData && !previousPageData.length) return null // reached the end
-//   return `/users?page=${pageIndex}&limit=10`                    // SWR key
-// }
-
-interface ResultsPageProps {
-  index: number;
-  pageSize: number;
+interface FetchError extends Error {
+  status: number;
 }
 
-function ResultsPage({ index, pageSize }: ResultsPageProps) {
-  const { data } = useSWR<FlowerResponse>(
-    `/api/flowers?limit=${pageSize}&cursor=${index * pageSize}`,
-    fetcher
-  );
-
-  if (!data) {
-    // TODO: handle loading state
-    return null;
+async function fetcher(url: string) {
+  const res = await fetch(url);
+  if (!res.ok) {
+    const error = new Error(
+      "An error occurred while fetching the data."
+    ) as FetchError;
+    error.message = await res.json();
+    error.status = res.status;
+    throw error;
   }
-
-  return (
-    <>
-      {data.map((result) => {
-        const openSeaLink = `https://opensea.io/assets/0x5a876ffc6e75066f5ca870e20fca4754c1efe91f/${result.tokenId}`;
-
-        return (
-          <div className="flower" key={result.tokenId}>
-            <a href={openSeaLink}>
-              <img src={result.image} alt={`Flower #${result.tokenId}`} />
-            </a>
-            <p className="flower-meta">
-              <a href={openSeaLink}>#{result.tokenId}</a>{" "}
-              <span className="subdued">Rank {result.rank}</span>
-            </p>
-          </div>
-        );
-      })}
-    </>
-  );
+  return res.json();
 }
+
+const getKey: (
+  limit: number,
+  tokenIds: string[],
+  walletAddress: string
+) => KeyLoader<FlowerResponse> =
+  (limit, tokenIds, walletAddress) => (_, previousPageData) => {
+    if (previousPageData && !previousPageData.hasNextPage) return null;
+
+    const queryParams = new URLSearchParams();
+    queryParams.set("limit", limit.toString());
+    if (previousPageData && previousPageData.nextCursor) {
+      queryParams.set("cursor", previousPageData.nextCursor.toString());
+    }
+    if (walletAddress && isValidAddress(walletAddress)) {
+      queryParams.set("walletAddress", walletAddress);
+    } else {
+      tokenIds.forEach((tokenId) => {
+        queryParams.append("tokenId", tokenId);
+      });
+    }
+
+    return `/api/flowers?${queryParams.toString()}`;
+  };
 
 const Home: NextPage = () => {
-  const [pageCount, setPageCount] = useState(1);
+  const [walletAddress, setWalletAddress] = useState("");
+  const validWallet = isValidAddress(walletAddress);
 
-  const pages = [];
-  for (let i = 0; i < pageCount; i++) {
-    pages.push(<ResultsPage key={i} index={i} pageSize={60} />);
-  }
+  const [searchTerm, setSearchTerm] = useState("");
+  const tokenIds = searchTerm ? searchTerm.split(",").map((i) => i.trim()) : [];
+
+  const PAGE_SIZE = 12;
+  const { data, error, size, setSize } = useSWRInfinite<
+    FlowerResponse,
+    FetchError
+  >(getKey(PAGE_SIZE, tokenIds, walletAddress), fetcher);
+
+  const flowers = data
+    ? data.reduce((acc: Flower[], page) => [...acc, ...page.flowers], [])
+    : [];
+  const isLoadingInitialData = !data && !error;
+  const isLoadingMore = Boolean(
+    isLoadingInitialData ||
+      (size > 0 && data && typeof data[size - 1] === "undefined")
+  );
+  const isEmpty = data && data[0]?.flowers.length === 0;
+  const hasReachedEnd =
+    isEmpty || !(data && data[data.length - 1]?.hasNextPage);
 
   return (
     <div className="page">
@@ -84,11 +99,53 @@ const Home: NextPage = () => {
           </p>
         </article>
 
-        <article className="flower-grid">{pages}</article>
-
         <div className="center-content">
-          <button onClick={() => setPageCount(pageCount + 1)}>Load More</button>
+          <div className="input-containers">
+            <input
+              value={walletAddress}
+              onChange={(e) => setWalletAddress(e.currentTarget.value)}
+              placeholder="Wallet address"
+            />
+            <input
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.currentTarget.value)}
+              placeholder="Search for flower IDs"
+              disabled={Boolean(walletAddress && validWallet)}
+            />
+          </div>
         </div>
+
+        {isEmpty ? (
+          <div className="center-content">
+            <p>No flowers found :(</p>
+          </div>
+        ) : (
+          <article className="flower-grid">
+            {flowers.map((flower) => {
+              const openSeaLink = `https://opensea.io/assets/0x5a876ffc6e75066f5ca870e20fca4754c1efe91f/${flower.tokenId}`;
+
+              return (
+                <div className="flower" key={flower.tokenId}>
+                  <a href={openSeaLink}>
+                    <img src={flower.image} alt={`Flower #${flower.tokenId}`} />
+                  </a>
+                  <p className="flower-meta">
+                    <a href={openSeaLink}>#{flower.tokenId}</a>{" "}
+                    <span className="subdued">Rank {flower.rank}</span>
+                  </p>
+                </div>
+              );
+            })}
+          </article>
+        )}
+
+        {!hasReachedEnd && (
+          <div className="center-content">
+            <button onClick={() => setSize(size + 1)} disabled={isLoadingMore}>
+              Load More
+            </button>
+          </div>
+        )}
       </main>
     </div>
   );
