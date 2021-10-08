@@ -1,7 +1,8 @@
-import type { NextPage } from "next";
-import { useRouter } from "next/dist/client/router";
-import Head from "next/head";
+import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
+import type { NextPage } from "next";
+import Head from "next/head";
+import { useRouter } from "next/dist/client/router";
 import { fetcher, FetchError } from "../../utils";
 import { FlowerResponse } from "../api/flowers/[tokenId]";
 
@@ -18,31 +19,6 @@ const Flower: NextPage = () => {
   const openSeaLink = `https://opensea.io/assets/0x5a876ffc6e75066f5ca870e20fca4754c1efe91f/${
     flower && flower.tokenId
   }`;
-
-  // TODO: Figure out how to render animated svgs into canvas
-  // const canvasRef = useRef<HTMLCanvasElement>(null);
-  // const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
-
-  // useEffect(() => {
-  //   const image = new Image(2000, 2000);
-
-  //   if (canvasRef.current && flower) {
-  //     const renderCtx = canvasRef.current.getContext("2d");
-  //     image.onload = draw;
-  //     image.src = flower.image.base64;
-
-  //     if (renderCtx) {
-  //       setContext(renderCtx);
-  //     }
-  //   }
-
-  //   function draw() {
-  //     if (context) {
-  //       // draw the ting
-  //       context.drawImage(image, 0, 0, 500, 500);
-  //     }
-  //   }
-  // }, [context, flower]);
 
   return (
     <div className="page">
@@ -65,13 +41,6 @@ const Flower: NextPage = () => {
         ) : (
           <>
             <article className="flower-detail">
-              {/* <canvas
-                className="hidden"
-                ref={canvasRef}
-                width={500}
-                height={500}
-              /> */}
-
               <a href={openSeaLink} className="flower">
                 <img
                   src={flower.image.base64}

@@ -3,8 +3,9 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import useSWRInfinite from "swr/infinite";
 import { KeyLoader } from "swr";
-import { fetcher, FetchError, Flower, isValidAddress } from "../utils";
+import { fetcher, FetchError, isValidAddress } from "../utils";
 import { FlowersResponse } from "./api/flowers";
+import { Flower } from "occ-flowers-sdk/dist/types";
 
 const getKey: (
   limit: number,
@@ -114,13 +115,16 @@ const Home: NextPage = () => {
                 <div className="flower" key={flower.tokenId}>
                   <a href={openSeaLink}>
                     <img
-                      src={flower.image.base64}
+                      src={`https://ipfs.io/ipfs/${flower.image.svg}`}
                       alt={`Flower #${flower.tokenId}`}
                     />
                   </a>
                   <p className="flower-meta">
-                    <a href={openSeaLink}>#{flower.tokenId}</a>{" "}
-                    <span className="subdued">Rank {flower.rank}</span>
+                    <a href={openSeaLink}>Flower #{flower.tokenId}</a>
+                    <br />
+                    <span className="subdued">
+                      Rank {flower.rarity.probability.rank}
+                    </span>
                   </p>
                 </div>
               );

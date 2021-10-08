@@ -1,15 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { contract } from "../../../data/contract";
-import rankedFlowersData from "../../../data/ranked-flower-images.json";
-import { Flower, isValidAddress, ResponseError } from "../../../utils";
+import { listFlowers, listFlowersInWallet } from "occ-flowers-sdk";
+import { Flower } from "occ-flowers-sdk/dist/types";
+import { ResponseError } from "../../../utils";
 
 export interface FlowersResponse {
   flowers: Flower[];
   nextCursor: number | null;
   hasNextPage: boolean;
 }
-
-const rankedFlowers = rankedFlowersData as Flower[];
 
 export default async (
   req: NextApiRequest,
@@ -29,29 +27,14 @@ export default async (
   const start = cursor ? parseInt(cursor, 10) : 0;
   const end = parseInt(limit, 10) + start;
 
-  let flowers = rankedFlowers;
+  let flowers: Flower[] = [];
 
-  if (walletAddress && isValidAddress(walletAddress)) {
-    // Get tokenIds from wallet
-    let balance = await contract.balanceOf(walletAddress);
-    balance = parseInt(balance.toString(), 10);
-
-    const ownedTokenIds =
-      balance > 0
-        ? await Promise.all(
-            Array.from({ length: balance }, (_, i) => i).map(async (i) => {
-              const tokenId = await contract.tokenOfOwnerByIndex(
-                walletAddress,
-                i
-              );
-              return tokenId ? tokenId.toString() : undefined;
-            })
-          )
-        : [];
-
-    flowers = flowers.filter((i) =>
-      ownedTokenIds.includes(i.tokenId.toString())
-    );
+  if (walletAddress) {
+    try {
+      flowers = await listFlowersInWallet(walletAddress); 
+    } catch (e) {}
+  } else {
+    flowers = await listFlowers()
   }
 
   if (tokenIds) {
