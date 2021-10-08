@@ -101,6 +101,7 @@ const Flower: NextPage = () => {
                   className="button"
                   href={`https://ipfs.io/ipfs/${flower.image.png}`}
                   target="_blank"
+                  rel="noreferrer"
                   download={`${flower.tokenId}.png`}
                 >
                   PNG
@@ -111,6 +112,7 @@ const Flower: NextPage = () => {
                     className="button"
                     href={`https://ipfs.io/ipfs/${flower.image.gif}`}
                     target="_blank"
+                    rel="noreferrer"
                     download={`${flower.tokenId}.gif`}
                   >
                     GIF
