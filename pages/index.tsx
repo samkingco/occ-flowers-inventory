@@ -75,7 +75,9 @@ const Home: NextPage = () => {
           <h1 className="font-snell">the garden</h1>
           <p>
             The garden is a WIP rarity tool for{" "}
-            <a href="https://www.occ.xyz/flowers">OCC#1 🌺 Flowers</a>.<br />
+            <a href="https://www.occ.xyz/flowers">OCC#1 🌺 Flowers</a>.
+          </p>
+          <p>
             Ranking is purely mathematical based on traits, not vibes. We think
             you should enjoy the flowers you love regardless of their rarity.
           </p>

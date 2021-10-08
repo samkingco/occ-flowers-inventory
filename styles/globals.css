@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap");
 
 @font-face {
   font-family: snell;
@@ -23,7 +23,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Crimson Text", serif;
+  font-family: "PT Serif", serif;
   line-height: 1.5;
   background: #000000;
   color: #ffffff;
@@ -83,8 +83,8 @@ button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
-  -webkit-appearance: button;
-  font-family: "Crimson Text", serif;
+  -webkit-appearance: none;
+  font-family: inherit;
   font-size: 1.25rem;
   font-style: normal;
   font-weight: normal;
@@ -97,7 +97,7 @@ button,
 
   border-radius: 100px;
   transition: all 0.2s ease-in-out;
-  padding: 0.75rem 2rem;
+  padding: 1rem 2rem;
   background-color: #ffffff;
   color: #000000;
   cursor: pointer;
@@ -167,7 +167,7 @@ input:focus-visible {
 }
 
 .intro {
-  max-width: 36rem;
+  max-width: 40rem;
   margin: 0 auto;
   text-align: center;
   font-size: 1.25rem;
@@ -283,16 +283,16 @@ a + .flower-meta {
     padding-bottom: 2rem;
   }
 
-  .input-containers {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .flower-attributes {
     grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
   }
 }
 
 @media (min-width: 48rem) {
+  .input-containers {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .flower-detail {
     grid-template-columns: 1fr 16rem;
     grid-gap: 4rem;
