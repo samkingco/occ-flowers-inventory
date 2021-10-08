@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import useSWRInfinite from "swr/infinite";
 import { KeyLoader } from "swr";
 import { fetcher, FetchError, isValidAddress } from "../utils";
@@ -108,27 +109,28 @@ const Home: NextPage = () => {
           </div>
         ) : (
           <article className="flower-grid">
-            {flowers.map((flower) => {
-              const openSeaLink = `https://opensea.io/assets/0x5a876ffc6e75066f5ca870e20fca4754c1efe91f/${flower.tokenId}`;
-
-              return (
-                <div className="flower" key={flower.tokenId}>
-                  <a href={openSeaLink}>
+            {flowers.map((flower) => (
+              <div className="flower" key={flower.tokenId}>
+                <Link href={`/flowers/${flower.tokenId}`}>
+                  <a>
                     <img
                       src={`https://ipfs.io/ipfs/${flower.image.svg}`}
                       alt={`Flower #${flower.tokenId}`}
+                      width="500"
+                      height="500"
                     />
                   </a>
-                  <p className="flower-meta">
-                    <a href={openSeaLink}>Flower #{flower.tokenId}</a>
-                    <br />
-                    <span className="subdued">
-                      Rank {flower.rarity.probability.rank}
-                    </span>
-                  </p>
-                </div>
-              );
-            })}
+                </Link>
+                <p className="flower-meta">
+                  <Link href={`/flowers/${flower.tokenId}`}>
+                    <a>Flower #{flower.tokenId}</a>
+                  </Link>
+                </p>
+                <p className="flower-meta subdued">
+                  Rank {flower.rarity.probability.rank}
+                </p>
+              </div>
+            ))}
           </article>
         )}
 

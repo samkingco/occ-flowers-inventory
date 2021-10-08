@@ -1,9 +1,9 @@
-@import url(https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Roboto&display=swap);
-@import url(https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200;0,300;0,400;1,300;1,400&display=swap);
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap");
 
 @font-face {
   font-family: snell;
   src: url(./SnellBTRegular.otf);
+  font-weight: normal;
 }
 
 *,
@@ -23,7 +23,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: Crimson Pro, serif;
+  font-family: "Crimson Text", serif;
   line-height: 1.5;
   background: #000000;
   color: #ffffff;
@@ -31,6 +31,7 @@ body {
 
 a {
   color: inherit;
+  font-style: italic;
 }
 
 h1,
@@ -43,7 +44,7 @@ p {
 h1,
 h2,
 h3 {
-  font-family: Crimson Pro, serif;
+  font-weight: 600;
 }
 
 h1 {
@@ -56,9 +57,10 @@ p + p {
   margin-top: 0.5rem;
 }
 
-img,
-canvas {
+img {
+  width: 100%;
   max-width: 100%;
+  height: auto;
 }
 
 canvas {
@@ -82,8 +84,10 @@ button,
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button;
-  font-family: inherit;
-  font-size: 100%;
+  font-family: "Crimson Text", serif;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: normal;
   line-height: 1.15;
   margin: 0;
   overflow: visible;
@@ -159,7 +163,7 @@ input:focus-visible {
 }
 
 .page {
-  padding: 6rem 2rem;
+  padding: 4rem 1rem;
 }
 
 .intro {
@@ -183,8 +187,13 @@ input:focus-visible {
   border-radius: 1rem;
 }
 
+a + .flower-meta {
+  margin-top: 0.5rem;
+}
+
 .flower-meta {
   text-align: center;
+  margin: 0;
 }
 
 .flower-meta a {
@@ -222,23 +231,64 @@ input:focus-visible {
   max-width: 72rem;
   margin: 0 auto;
   padding: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 2rem;
 }
 
-.flower-attributes dl {
+.flower-attributes {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 0.5rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
 
+.flower-attributes div {
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.flower-buttons {
+  margin: 0 auto;
+  max-width: 20rem;
+  padding: 2rem 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1rem;
+}
+
+.flower-buttons .button {
+  text-align: center;
+  width: 100%;
+}
+
+.flower-buttons .button:not(:last-child) {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px white;
+  color: white;
+}
+
+.flower-buttons .button:not(:last-child):hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 @media (min-width: 32rem) {
+  .page {
+    padding: 6rem 2rem;
+  }
+
   .flower-grid {
     grid-template-columns: repeat(2, 1fr);
+    padding-top: 1rem;
+    padding-bottom: 2rem;
   }
 
   .input-containers {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .flower-attributes {
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
   }
 }
 
@@ -246,6 +296,21 @@ input:focus-visible {
   .flower-detail {
     grid-template-columns: 1fr 16rem;
     grid-gap: 4rem;
+  }
+
+  .flower-attributes {
+    padding: 0 2rem;
+  }
+
+  .flower-buttons {
+    max-width: 28rem;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 2rem;
+  }
+
+  .flower-buttons.has-gif {
+    max-width: 42rem;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
